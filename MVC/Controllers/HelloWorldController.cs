@@ -9,14 +9,27 @@ namespace MVC.Controllers
 {
     public class HelloWorldController : Controller
     {
-        public string Index()
+
+
+        public IActionResult Index()
         {
             //using System.Web;
-            return HttpUtility.HtmlEncode("Hello world!");
+            //return HttpUtility.HtmlEncode("<p>Hello world!</p>");
+
+            ViewData["param1"] = "ViewDataParam1";
+            ViewBag.Param2 = "ViewBagParam2";
+
+            ViewBag.for1 = 3;
+            ViewBag.for2 = 8;
+
+            return View((object)"ModelParam3");
         }
-        public string Welcome(string name, string id)
+        public IActionResult Welcome(string name, string id)
         {
-            return HttpUtility.HtmlEncode($"Hello {name}! Your id: {id}");
+           // return $"<p>Hello {name}! Your id: {id}</p>";
+
+            //return View();
+           return RedirectToAction(nameof(Index));
         }
     }
 }

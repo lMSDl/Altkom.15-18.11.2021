@@ -1,0 +1,34 @@
+﻿@model string
+
+@{ 
+    Layout = "_Layout2";
+    ViewBag.Title = "Cześć";
+}
+
+@{ var helloMessage = "Hello World - Index"; }
+
+<h2>@helloMessage</h2>
+
+
+@{ var param1 = ViewData["param1"];
+    var param2 = ViewBag.Param2;
+
+    string HelloMessage;
+    if (param1 == param2)
+        HelloMessage = $"Hello with params: {param1}";
+    else
+        HelloMessage = $"Hello with params: {param1}, {param2}";
+}
+<h2>@HelloMessage</h2>
+
+@for (int i = ViewBag.for1; i < ViewBag.for2; i++)
+{
+    <li>@i</li>
+    <p>Param1: @ViewData["param1"]</p>
+    <p>Param2: @ViewBag.Param2</p>
+    <p>Param3: @Model.ToLower()</p>
+}
+
+@{ var headers = string.Join("; ", Context.Request.Headers); }
+
+@headers

@@ -1,4 +1,41 @@
-﻿@model string
+﻿@using Models
+@model IEnumerable<User>
 
 
-@Model
+@{ 
+    ViewBag.Title = "Users";
+}
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName(nameof(Models.User.Id))
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th>
+                    @Html.Label(nameof(Models.User.Password))
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(_ => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(_ => item.Username)
+                    </td>
+                    <td>
+                        @item.Password
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

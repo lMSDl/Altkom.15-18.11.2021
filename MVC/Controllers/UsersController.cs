@@ -18,9 +18,9 @@ namespace MVC.Controllers
 
         public IActionResult Index()
         {
-            var users = string.Join("\n", _service.Entities.Select(x => x.ToString()).ToList());
+            //var users = string.Join("\n", _service.Entities.Select(x => x.ToString()).ToList());
 
-            return View((object)users);
+            return View(_service.Entities);
         }
     }
 }

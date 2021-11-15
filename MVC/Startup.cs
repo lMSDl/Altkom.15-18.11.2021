@@ -29,9 +29,19 @@ namespace MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization(x => x.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Program)));
 
             services.AddSingleton<Service<User>>(x => new Service<User>(new UserFaker(), 5));
+
+            services.AddLocalization(x => x.ResourcesPath = "Resources");
+            services.Configure<RequestLocalizationOptions>(x =>
+            {
+                x.SetDefaultCulture("en-us");
+                x.AddSupportedCultures("en-us", "pl");
+                x.AddSupportedUICultures("en-us", "pl");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +59,8 @@ namespace MVC
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseRequestLocalization();
 
             app.UseRouting();
 

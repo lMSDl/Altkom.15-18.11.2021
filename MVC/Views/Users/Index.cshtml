@@ -1,8 +1,17 @@
 ﻿@using Models
 @model IEnumerable<User>
 
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Program> StringLocalizer
 
-@{ 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<Program> HtmlLocalizer
+
+@inject IViewLocalizer ViewLocalizer
+
+
+
+@{
     ViewBag.Title = "Users";
 }
 
@@ -11,13 +20,13 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayName(nameof(Models.User.Id))
+                    @Html.DisplayName(StringLocalizer[nameof(Models.User.Id)])
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Username)
                 </th>
                 <th>
-                    @Html.Label(nameof(Models.User.Password))
+                    @ViewLocalizer[nameof(Models.User.Password)]
                 </th>
             </tr>
         </thead>

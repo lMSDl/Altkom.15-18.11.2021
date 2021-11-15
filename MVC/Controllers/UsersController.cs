@@ -22,5 +22,16 @@ namespace MVC.Controllers
 
             return View(_service.Entities);
         }
+
+        public IActionResult Search(string username, Roles? roles)
+        {
+            var users = (IEnumerable<User>)_service.Entities;
+            if (!string.IsNullOrWhiteSpace(username))
+                users = users.Where(x => x.Username.Contains(username));
+            if (roles != null)
+                users = users.Where(x => x.Role.HasFlag(roles.Value));
+
+            return View(nameof(Index), users.ToList());
+        }
     }
 }

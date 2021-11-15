@@ -13,7 +13,25 @@
 
 @{
     ViewBag.Title = "Users";
+
+    var rolesSearchList = Enum.GetValues<Roles>().Select(x => new SelectListItem(StringLocalizer[x.ToString()], x.ToString())).ToList() ;
+    rolesSearchList.Add(new SelectListItem(string.Empty, string.Empty));
+
 }
+
+<div>
+
+    @*<form>*@
+
+    @using (@Html.BeginForm())
+    {
+        @StringLocalizer[nameof(Models.User.Username)] @Html.TextBox("username")<br>
+        @StringLocalizer[nameof(Models.User.Role)] @Html.DropDownList("roles", rolesSearchList)<br>
+        <input type="submit" value="@StringLocalizer["Search"]" asp-action="Search"/>
+    }
+
+    @*</form>*@
+    </div>
 
 <div>
     <table class="table">
@@ -28,22 +46,28 @@
                 <th>
                     @ViewLocalizer[nameof(Models.User.Password)]
                 </th>
+                <th>
+                    @StringLocalizer[Html.DisplayNameFor(model => model.Role)]
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(_ => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(_ => item.Username)
-                    </td>
-                    <td>
-                        @item.Password
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(_ => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(_ => item.Username)
+                </td>
+                <td>
+                    @item.Password
+                </td>
+                <td>
+                    @item.Role
+                </td>
+            </tr>
             }
         </tbody>
     </table>

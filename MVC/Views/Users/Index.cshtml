@@ -12,6 +12,8 @@
 
 @HtmlLocalizer["<h2><u>Users</u></h2>"]
 
+@Html.ActionLink(StringLocalizer["Add"], "Add")
+
 <div>
 
     <form asp-controller="Users" asp-action="Search" asp-antiforgery="true">

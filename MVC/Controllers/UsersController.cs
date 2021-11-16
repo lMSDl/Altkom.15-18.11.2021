@@ -37,6 +37,20 @@ namespace MVC.Controllers
             return View(nameof(Index), users.ToList());
         }
 
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(User user)
+        {
+            user.Id = _service.Entities.Max(x => x.Id) + 1;
+            _service.Entities.Add(user);
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult Edit(int? id)
         {
             if (!id.HasValue)

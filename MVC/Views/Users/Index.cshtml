@@ -21,16 +21,18 @@
 
 <div>
 
-    @*<form>*@
+    <form asp-controller="Users" asp-action="Search" asp-antiforgery="true">
 
-    @using (@Html.BeginForm())
+    @*@using (@Html.BeginForm("Search", "Users"))
     {
+        @Html.AntiForgeryToken()*@
+
         @StringLocalizer[nameof(Models.User.Username)] @Html.TextBox("username")<br>
         @StringLocalizer[nameof(Models.User.Role)] @Html.DropDownList("roles", rolesSearchList)<br>
-        <input type="submit" value="@StringLocalizer["Search"]" asp-action="Search"/>
-    }
+        <input type="submit" value="@StringLocalizer["Search"]" @*asp-action="Search"*@/>
+    @*}*@
 
-    @*</form>*@
+    </form>
     </div>
 
 <div>

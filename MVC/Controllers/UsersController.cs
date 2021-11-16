@@ -23,6 +23,7 @@ namespace MVC.Controllers
             return View(_service.Entities);
         }
 
+        [ValidateAntiForgeryToken]
         public IActionResult Search(string username, Roles? roles)
         {
             var users = (IEnumerable<User>)_service.Entities;

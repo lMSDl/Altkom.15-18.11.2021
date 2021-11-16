@@ -5,48 +5,57 @@
 @{
     ViewBag.Title = "Users";
 
-    var rolesSearchList = Enum.GetValues<Roles>().Select(x => new SelectListItem(StringLocalizer[x.ToString()], x.ToString())).ToList() ;
+    var rolesSearchList = Enum.GetValues<Roles>().Select(x => new SelectListItem(StringLocalizer[x.ToString()], x.ToString())).ToList();
     rolesSearchList.Add(new SelectListItem(string.Empty, string.Empty));
 
 }
 
 @HtmlLocalizer["<h2><u>Users</u></h2>"]
 
-@Html.ActionLink(StringLocalizer["Add"], "Add")
+@if (Context.User.IsInRole(nameof(Models.Roles.Create)))
+{
+    @Html.ActionLink(StringLocalizer["Add"], "Add")
+}
 
 <div>
 
     <form asp-controller="Users" asp-action="Search" asp-antiforgery="true">
 
-    @*@using (@Html.BeginForm("Search", "Users"))
-    {
-        @Html.AntiForgeryToken()*@
+        @*@using (@Html.BeginForm("Search", "Users"))
+            {
+                @Html.AntiForgeryToken()*@
 
         @StringLocalizer[nameof(Models.User.Username)] @Html.TextBox("username")<br>
         @StringLocalizer[nameof(Models.User.Role)] @Html.DropDownList("roles", rolesSearchList)<br>
-        <input type="submit" value="@StringLocalizer["Search"]" @*asp-action="Search"*@/>
-    @*}*@
+        <input type="submit" value="@StringLocalizer["Search"]" @*asp-action="Search"*@ />
+        @*}*@
 
     </form>
-    </div>
+</div>
 
 <div>
     <table class="table">
         <thead>
             <tr>
-                <partial name="_UserHeader" model="new Models.User()"/>
+                <partial name="_UserHeader" model="new Models.User()" />
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <partial name="_UserBody" for="@item" />
-                <td>
-                    @Html.ActionLink(StringLocalizer["Edit"], "Edit", new { id = item.Id })
-                    <a asp-action="Delete" asp-route-id="@item.Id">@StringLocalizer["Delete"]</a>
-                </td>
-            </tr>
+                <tr>
+                    <partial name="_UserBody" for="@item" />
+                    <td>
+                        @if (Context.User.IsInRole(nameof(Models.Roles.Update)))
+                        {
+                            @Html.ActionLink(StringLocalizer["Edit"], "Edit", new { id = item.Id })
+                        }
+                        @if (Context.User.IsInRole(nameof(Models.Roles.Delete)))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id">@StringLocalizer["Delete"]</a>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

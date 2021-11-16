@@ -1,4 +1,5 @@
 ﻿using BogusService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace MVC.Controllers
 {
     [AutoValidateAntiforgeryToken]
+    [Authorize]
     public class UsersController : Controller
     {
         private Service<User> _service;
@@ -17,6 +19,7 @@ namespace MVC.Controllers
             _service = service;
         }
 
+        [Authorize(Roles = nameof(Roles.Read))]
         public IActionResult Index()
         {
             //var users = string.Join("\n", _service.Entities.Select(x => x.ToString()).ToList());
@@ -26,6 +29,7 @@ namespace MVC.Controllers
 
         //[ValidateAntiForgeryToken]
         [HttpPost]
+        [Authorize(Roles = nameof(Roles.Read))]
         public IActionResult Search(string username, Roles? roles)
         {
             var users = (IEnumerable<User>)_service.Entities;
@@ -37,12 +41,14 @@ namespace MVC.Controllers
             return View(nameof(Index), users.ToList());
         }
 
+        [Authorize(Roles = nameof(Roles.Create))]
         public IActionResult Add()
         {
             return View(new User());
         }
 
         [HttpPost]
+        [Authorize(Roles = nameof(Roles.Create))]
         public IActionResult Add(User user)
         {
             if(!ModelState.IsValid)
@@ -62,6 +68,7 @@ namespace MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = nameof(Roles.Update))]
         public IActionResult Edit(int? id)
         {
             if (!id.HasValue)
@@ -75,6 +82,7 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = nameof(Roles.Update))]
         public IActionResult Edit(int id, [Bind("Password", "Role")]User user /*string username, string password, Roles roles*/)
         {
             if(!ModelState.IsValid)
@@ -91,7 +99,7 @@ namespace MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [Authorize(Roles = nameof(Roles.Delete))]
         public IActionResult Delete(int? id)
         {
             if (!id.HasValue)
@@ -106,6 +114,7 @@ namespace MVC.Controllers
 
         //[ValidateAntiForgeryToken]
         [HttpPost]
+        [Authorize(Roles = nameof(Roles.Delete))]
         public IActionResult DeleteUser(int? id)
         {
             if (!id.HasValue)

@@ -1,5 +1,7 @@
 using BogusService;
 using BogusService.Fakers;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Models;
+using Models.Validators;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +34,10 @@ namespace MVC
         {
             services.AddControllersWithViews()
                 .AddViewLocalization()
-                .AddDataAnnotationsLocalization(x => x.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Program)));
+                .AddDataAnnotationsLocalization(x => x.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(Program)))
+                .AddFluentValidation(/*x => x.RegisterValidatorsFromAssemblyContaining<UserValidator>()*/);
+
+            services.AddTransient<IValidator<User>, UserValidator>();
 
             services.AddSingleton<Service<User>>(x => new Service<User>(new UserFaker(), 5));
 

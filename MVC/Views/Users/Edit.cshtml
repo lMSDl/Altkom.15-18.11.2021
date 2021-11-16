@@ -1,3 +1,9 @@
 ﻿@model Models.User
 
 @await Html.PartialAsync("_Edit", Model)
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

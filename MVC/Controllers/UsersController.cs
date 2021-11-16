@@ -39,12 +39,23 @@ namespace MVC.Controllers
 
         public IActionResult Add()
         {
-            return View();
+            return View(new User());
         }
 
         [HttpPost]
         public IActionResult Add(User user)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(user);
+            }
+
+            if(_service.Entities.Any(x => x.Username == user.Username))
+            {
+                ModelState.AddModelError(nameof(user.Username), "Username already exists");
+                return View(user);
+            }
+
             user.Id = _service.Entities.Max(x => x.Id) + 1;
             _service.Entities.Add(user);
 
@@ -64,10 +75,15 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, [Bind("Username", "Password", "Role")]User user /*string username, string password, Roles roles*/)
+        public IActionResult Edit(int id, [Bind("Password", "Role")]User user /*string username, string password, Roles roles*/)
         {
+            if(!ModelState.IsValid)
+            {
+                user.Id = id;
+                return View(user);
+            }
+
             var item = _service.Entities.Single(x => x.Id == id);
-            item.Username = user.Username;
             if(!string.IsNullOrWhiteSpace(user.Password))
                 item.Password = user.Password;
             item.Role = user.Role;

@@ -37,6 +37,31 @@ namespace MVC.Controllers
             return View(nameof(Index), users.ToList());
         }
 
+        public IActionResult Edit(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+
+            var item = _service.Entities.SingleOrDefault(x => x.Id == id);
+            if (item == null)
+                return NotFound();
+
+            return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, [Bind("Username", "Password", "Role")]User user /*string username, string password, Roles roles*/)
+        {
+            var item = _service.Entities.Single(x => x.Id == id);
+            item.Username = user.Username;
+            if(!string.IsNullOrWhiteSpace(user.Password))
+                item.Password = user.Password;
+            item.Role = user.Role;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
         public IActionResult Delete(int? id)
         {
             if (!id.HasValue)

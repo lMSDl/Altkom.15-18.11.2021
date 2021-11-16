@@ -41,6 +41,7 @@
             <tr>
                 <partial name="_UserBody" for="@item" />
                 <td>
+                    @Html.ActionLink(StringLocalizer["Edit"], "Edit", new { id = item.Id })
                     <a asp-action="Delete" asp-route-id="@item.Id">@StringLocalizer["Delete"]</a>
                 </td>
             </tr>

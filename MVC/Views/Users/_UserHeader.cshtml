@@ -1,0 +1,16 @@
+﻿@model Models.User
+
+@inject IViewLocalizer ViewLocalizer
+
+<th>
+    @Html.DisplayName(StringLocalizer[nameof(Models.User.Id)])
+</th>
+<th>
+    @Html.DisplayNameFor(model => model.Username)
+</th>
+<th>
+    @ViewLocalizer[nameof(Models.User.Password)]
+</th>
+<th>
+    @StringLocalizer[Html.DisplayNameFor(model => model.Role)]
+</th>

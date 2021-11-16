@@ -1,15 +1,6 @@
 ﻿@using Models
 @model IEnumerable<User>
 
-@using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Program> StringLocalizer
-
-@using Microsoft.AspNetCore.Mvc.Localization
-@inject IHtmlLocalizer<Program> HtmlLocalizer
-
-@inject IViewLocalizer ViewLocalizer
-
-
 
 @{
     ViewBag.Title = "Users";
@@ -41,35 +32,16 @@
     <table class="table">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayName(StringLocalizer[nameof(Models.User.Id)])
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Username)
-                </th>
-                <th>
-                    @ViewLocalizer[nameof(Models.User.Password)]
-                </th>
-                <th>
-                    @StringLocalizer[Html.DisplayNameFor(model => model.Role)]
-                </th>
+                <partial name="_UserHeader" model="new Models.User()"/>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
             <tr>
+                <partial name="_UserBody" for="@item" />
                 <td>
-                    @Html.DisplayFor(_ => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(_ => item.Username)
-                </td>
-                <td>
-                    @item.Password
-                </td>
-                <td>
-                    @item.Role
+                    <a asp-action="Delete" asp-route-id="@item.Id">@StringLocalizer["Delete"]</a>
                 </td>
             </tr>
             }

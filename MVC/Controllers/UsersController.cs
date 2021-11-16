@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Controllers
 {
+    [AutoValidateAntiforgeryToken]
     public class UsersController : Controller
     {
         private Service<User> _service;
@@ -23,7 +24,8 @@ namespace MVC.Controllers
             return View(_service.Entities);
         }
 
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
+        [HttpPost]
         public IActionResult Search(string username, Roles? roles)
         {
             var users = (IEnumerable<User>)_service.Entities;
@@ -33,6 +35,30 @@ namespace MVC.Controllers
                 users = users.Where(x => x.Role.HasFlag(roles.Value));
 
             return View(nameof(Index), users.ToList());
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+
+            var item = _service.Entities.SingleOrDefault(x => x.Id == id);
+            if (item == null)
+                return NotFound();
+
+            return View(item);
+        }
+
+        //[ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult DeleteUser(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+
+            _service.Entities.Remove(_service.Entities.Single(x => x.Id == id));
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

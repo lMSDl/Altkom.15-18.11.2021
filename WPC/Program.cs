@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            Structural.Composite.Client.Execute();
+            Structural.Decorator.Client.Execute();
         }
     }
 }

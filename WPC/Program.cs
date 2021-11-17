@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            Structural.Adapter.II.Client.Execute();
+            Structural.Bridge.II.Client.Execute();
         }
     }
 }

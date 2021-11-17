@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            Creational.Prototype.Client.Execute();
+            Creational.Singleton.Client.Execute();
         }
     }
 }

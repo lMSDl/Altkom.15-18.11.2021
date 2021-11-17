@@ -1,0 +1,32 @@
+﻿@page
+@model RazorPages.Pages.Login.IndexModel
+@{
+    ViewBag.Title = "Login";
+}
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-group">
+                @Html.Label("Username")
+                @Html.Editor("Username")
+            </div>
+            <div class="form-group">
+                @Html.Label("Password")
+                @Html.Password("Password")
+            </div>
+
+            @Html.ValidationSummary()
+
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn" />
+            </div>
+        }
+
+    </div>
+
+</div>

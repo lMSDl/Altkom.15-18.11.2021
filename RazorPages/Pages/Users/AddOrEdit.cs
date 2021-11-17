@@ -1,4 +1,5 @@
 ﻿using BogusService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace RazorPages.Pages.Users
 {
+    [Authorize(Roles = nameof(Roles.Create))]
+    [Authorize(Roles = nameof(Roles.Update))]
     public class AddOrEdit : PageModel
     {
         public Service<User> Service { get; }

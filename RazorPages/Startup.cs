@@ -1,5 +1,6 @@
 using BogusService;
 using BogusService.Fakers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,9 +27,23 @@ namespace RazorPages
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Users").AllowAnonymousToPage("/Users/Index");
+            });
 
             services.AddSingleton<Service<User>>(x => new Service<User>(new UserFaker(), 5));
+
+
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(x =>
+                {
+                    x.LoginPath = "/Login";
+                    x.LogoutPath = "/Login/Logout";
+                    x.AccessDeniedPath = "/";
+                    x.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +65,7 @@ namespace RazorPages
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

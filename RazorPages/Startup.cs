@@ -1,9 +1,12 @@
+using BogusService;
+using BogusService.Fakers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +27,8 @@ namespace RazorPages
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.AddSingleton<Service<User>>(x => new Service<User>(new UserFaker(), 5));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

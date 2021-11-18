@@ -12,9 +12,6 @@ namespace WPC.Creational.Builder
             public VehicleBuilder(Vehicle vehicle) : base(vehicle)
             {
             }
-            protected VehicleBuilder(Vehicle vehicle) : base(vehicle)
-            {
-            }
 
             public VehicleBuilder SetWeels(int wheels)
             {

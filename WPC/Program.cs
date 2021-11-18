@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            Behavioral.ChainOfResponsibility.II.Client.Execute();
+            Behavioral.Command.Client.Execute();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            Behavioral.Memento.Client.Execute();
+            WPC.Behavioral.Observer.Client.Execute();
         }
     }
 }

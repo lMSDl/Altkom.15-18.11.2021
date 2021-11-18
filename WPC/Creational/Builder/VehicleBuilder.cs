@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 namespace WPC.Creational.Builder
 {
     public partial class Vehicle {
-        public class VehicleBuilder
+        public class VehicleBuilder : VehicleBuilderFacade
         {
-            protected Vehicle Vehicle { get; }
-
-            public VehicleBuilder()
+            public VehicleBuilder(Vehicle vehicle) : base(vehicle)
             {
-                Vehicle = new Vehicle();
             }
-            public Vehicle Build()
+            protected VehicleBuilder(Vehicle vehicle) : base(vehicle)
             {
-                return Vehicle;
             }
 
             public VehicleBuilder SetWeels(int wheels)

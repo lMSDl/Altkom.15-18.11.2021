@@ -20,12 +20,25 @@ namespace WPC.Creational.Builder
             //builder.SetTrunk(500);
             //var vehicle = builder.Build();
 
-            var vehicle = new Vehicle.VehicleBuilder()
-                .SetWeels(4)
-                .SetDoors(5)
-                .SetSeets(4)
-                .SetEngine(100)
-                .SetTrunk(500)
+            //var vehicle = new Vehicle.VehicleBuilder()
+            //    .SetWeels(4)
+            //    .SetDoors(5)
+            //    .SetSeets(4)
+            //    .SetEngine(100)
+            //    .SetTrunk(500)
+            //    .Build();
+
+            var vehicle = new Vehicle.VehicleBuilderFacade()
+                .Components
+                    .SetWeels(4)
+                    .SetDoors(5)
+                    .SetSeets(4)
+                .Manufacture
+                    .SetManufacturer("Altkom")
+                    .SetProductionDate(DateTime.Today)
+                .Components
+                    .SetEngine(100)
+                    .SetTrunk(500)
                 .Build();
 
             Console.WriteLine(vehicle);

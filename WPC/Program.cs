@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            Structural.Proxy.Client.Execute();
+            Behavioral.ChainOfResponsibility.II.Client.Execute();
         }
     }
 }

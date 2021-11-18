@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            Behavioral.Iterator.Client.Execute();
+            Behavioral.Mediator.Client.Execute();
         }
     }
 }

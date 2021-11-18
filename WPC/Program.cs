@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            Structural.Flyweight.Client.Execute();
+            Structural.Proxy.Client.Execute();
         }
     }
 }

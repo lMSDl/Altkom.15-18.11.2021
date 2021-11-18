@@ -6,7 +6,7 @@ namespace WPC
     {
         static void Main(string[] args)
         {
-            WPC.Behavioral.MethodTemplate.Client.Execute();
+            WPC.Behavioral.Visitor.II.Client.Execute();
         }
     }
 }
